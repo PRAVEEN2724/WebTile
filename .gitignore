@@ -1,0 +1,21 @@
+# Node
+**/node_modules/
+npm-debug.log*
+
+# Frontend builds
+**/dist/
+**/build/
+
+# Backend (Spring Boot / Maven)
+**/target/
+**/.mvn/
+
+# Uploads & env
+**/uploads/
+**/.env
+
+# Zip files
+*.zip
+
+# OS files
+.DS_Store
