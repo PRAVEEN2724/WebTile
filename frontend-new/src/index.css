@@ -16,21 +16,24 @@
   gap: 24px;
 }
 
+
 /* Tile card */
 .tile-card {
   background: #fff;
-  border-radius: 12px;
+  border-radius: 16px;
   border: 1px solid #e5e7eb;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   height: 100%;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .tile-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  border-color: #c084fc;
 }
 
 .tile-link {
@@ -42,56 +45,92 @@
 .tile-image {
   width: 100%;
   height: 240px;        /* Fixed height for consistency */
-  object-fit: cover;    /* Crops to fit without distortion */
-  background: #f3f4f6;
+  object-fit: contain;  /* Preserves aspect ratio without cropping or stretching */
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
   display: block;
+  padding: 12px;        /* Padding for images near edges */
 }
 
 /* Seller dashboard tweaks */
 .seller-dashboard {
-  max-width: 980px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 32px 20px;
 }
 
 .upload-panel {
   background: #fbfbfb;
-  border: 1px solid #eee;
-  padding: 16px;
-  border-radius: 8px;
+  border: 2px solid #e5e7eb;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 24px;
 }
 
 /* Info section */
 .tile-info {
-  padding: 16px;
+  padding: 20px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  gap: 12px;
 }
 
 .tile-name {
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  line-height: 1.4;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.5;
   color: #1f2937;
 }
 
 .tile-price {
-  font-size: 18px;
-  color: #dc2626;
-  font-weight: 700;
-  margin-bottom: 8px;
+  font-size: 20px;
+  font-weight: 900;
+  margin: 0;
+}
+
+/* ===== RESPONSIVE IMPROVEMENTS ===== */
+@media (max-width: 768px) {
+  .tiles-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 24px;
+  }
+  
+  .page-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .home-container {
+    padding: 20px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tiles-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tile-card {
+  animation: fadeIn 0.3s ease-out;
 }
 
 
 
-/* src/index.css */
-/*
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-*/
+
 
 
 
