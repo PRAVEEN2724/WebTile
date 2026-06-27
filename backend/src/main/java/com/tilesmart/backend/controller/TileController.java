@@ -60,7 +60,24 @@ public class TileController {
      * Resize image to standard dimensions while maintaining aspect ratio
      */
     private String saveResizedImage(MultipartFile imageFile) throws IOException {
-        String fileName = System.currentTimeMillis() + "_" + imageFile.getOriginalFilename();
+        String originalName = imageFile.getOriginalFilename();
+        String format = "jpg"; // default output format
+        if (originalName != null) {
+            String lowerName = originalName.toLowerCase();
+            if (lowerName.endsWith(".png")) format = "png";
+            else if (lowerName.endsWith(".gif")) format = "gif";
+            else if (lowerName.endsWith(".bmp")) format = "bmp";
+        }
+        
+        // Extract base name without extension
+        String baseName = originalName != null ? originalName : "image";
+        int lastDot = baseName.lastIndexOf('.');
+        if (lastDot > 0) {
+            baseName = baseName.substring(0, lastDot);
+        }
+        
+        // Generate new file name with matching output format extension
+        String fileName = System.currentTimeMillis() + "_" + baseName + "." + format;
         
         // Ensure tiles subdirectory exists
         File tilesDir = new File(uploadDir + "tiles/");
@@ -101,7 +118,6 @@ public class TileController {
 
         // Save resized image
         File outputFile = new File(tilesDir, fileName);
-        String format = getImageFormat(fileName);
         boolean written = ImageIO.write(resizedImage, format, outputFile);
         
         if (!written) {
@@ -112,17 +128,6 @@ public class TileController {
         
         // Return relative path for database storage
         return "/uploads/tiles/" + fileName;
-    }
-
-    /**
-     * Extract image format from filename
-     */
-    private String getImageFormat(String fileName) {
-        String format = "jpg";
-        if (fileName.endsWith(".png")) format = "png";
-        else if (fileName.endsWith(".gif")) format = "gif";
-        else if (fileName.endsWith(".bmp")) format = "bmp";
-        return format;
     }
 
     // ✅ GET with optional filters

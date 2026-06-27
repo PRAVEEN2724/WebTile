@@ -42,7 +42,7 @@ function Login() {
       } else if (data.role === "CUSTOMER") {
         navigate("/");
       } else if (data.role === "ADMIN") {
-        navigate("/admin");
+        navigate("/admin-dashboard");
       }
     } catch (err) {
       setError("Error: " + err.message);

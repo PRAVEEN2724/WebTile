@@ -8,9 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tilesmart.backend.model.Category;
 import com.tilesmart.backend.model.Shop;
 import com.tilesmart.backend.model.Tile;
+import com.tilesmart.backend.entity.User;
+import com.tilesmart.backend.entity.Role;
 import com.tilesmart.backend.repository.CategoryRepository;
 import com.tilesmart.backend.repository.ShopRepository;
 import com.tilesmart.backend.repository.TileRepository;
+import com.tilesmart.backend.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Component
 public class SeedDataLoader implements CommandLineRunner {
@@ -24,10 +28,26 @@ public class SeedDataLoader implements CommandLineRunner {
     @Autowired
     private TileRepository tileRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     @Transactional
     public void run(String... args) throws Exception {
         try {
+            if (userRepository.findByEmail("admin@tilesmart.com").isEmpty()) {
+                User admin = new User();
+                admin.setName("Admin");
+                admin.setEmail("admin@tilesmart.com");
+                admin.setPassword(passwordEncoder.encode("adminpassword"));
+                admin.setRole(Role.ADMIN);
+                userRepository.save(admin);
+                System.out.println("SeedDataLoader: Admin user created.");
+            }
+
             if (tileRepository.count() > 0) {
                 System.out.println("SeedDataLoader: tiles already present, skipping seeding");
                 return;

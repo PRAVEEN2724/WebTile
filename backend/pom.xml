@@ -45,6 +45,11 @@
             <artifactId>thumbnailator</artifactId>
             <version>0.4.20</version>
         </dependency>
+        <dependency>
+            <groupId>com.twelvemonkeys.imageio</groupId>
+            <artifactId>imageio-webp</artifactId>
+            <version>3.13.1</version>
+        </dependency>
         <!-- Remove spring-boot-starter-thymeleaf as it's not needed for REST API with React -->
     </dependencies>
     <build>
